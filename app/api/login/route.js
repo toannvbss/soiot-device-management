@@ -1,31 +1,28 @@
 import { NextResponse } from "next/server";
 
+function createResponse(msg, success = false) {
+    return NextResponse.json({
+        msg,
+        success
+    })
+}
+
 export async function POST(request) {
     try {
         const {username, password} = await request.json();
 
         if (username !== 'john') {
-            return NextResponse.json({
-                msg: '* Incorrect username. Please try again!',
-                success: false
-            })
+            return createResponse('* Incorrect username. Please try again!');
         }
 
         if (password !== '1234') {
-            return NextResponse.json({
-                msg: '* Incorrect password. Please try again!',
-                success: false
-            })
+            return createResponse('* Incorrect password. Please try again!');
         }
 
-        return NextResponse.json({
-            success: true
-        })
+        return createResponse('Login successful!', true);
         
     } catch (error) {
-        return NextResponse.json({
-            msg: '* Invalid request!',
-            success: false
-        })
+        console.error(error);
+        return createResponse(`* An error occurred: ${error.message}`);
     }
 }

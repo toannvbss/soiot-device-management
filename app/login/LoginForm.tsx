@@ -7,27 +7,34 @@ export default function LoginForm() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = async (event:React.ChangeEvent<HTMLInputElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
         const loginData = {
             username,
             password
         }
+    
+        try {
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(loginData)
+            })
+    
+            const res = await response.json();
+            if(!res.success) {
+                setError(res.msg);
+            }
 
-        const response = await fetch ("/api/login", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(loginData)
-        })
-
-        const {success, msg} = await response.json();
-        if(!success) {
-            setError(msg);
+        } catch (error) {
+            console.log(error);
+            setError('An error occurred!');
         }
     }
+    
 
     const handleUsernameInput = (event:React.ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
