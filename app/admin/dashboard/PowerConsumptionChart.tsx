@@ -6,14 +6,16 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const colors = [
-  { bg: 'rgba(255, 99, 132, 0.2)', border: 'rgba(255, 99, 132, 1)' },
-  { bg: 'rgba(54, 162, 235, 0.2)', border: 'rgba(54, 162, 235, 1)' },
-  { bg: 'rgba(255, 206, 86, 0.2)', border: 'rgba(255, 206, 86, 1)' },
-  { bg: 'rgba(75, 192, 192, 0.2)', border: 'rgba(75, 192, 192, 1)' },
-  { bg: 'rgba(153, 102, 255, 0.2)', border: 'rgba(153, 102, 255, 1)' },
-  { bg: 'rgba(255, 159, 64, 0.2)', border: 'rgba(255, 159, 64, 1)' },
-];
+function getRandomColorPair(): {bgColor: string, borderColor: string} {
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+
+  const bgColor = `rgba(${red}, ${green}, ${blue}, 0.3)`;
+  const borderColor = `rgba(${red}, ${green}, ${blue}, 1)`;
+
+  return { bgColor, borderColor };
+}
 
 export default function PowerConsumptionChart() {
   const dashboardContext = useContext(DashboardContext);
@@ -21,15 +23,28 @@ export default function PowerConsumptionChart() {
 
   useEffect(() => {
     if (dashboardContext) {
+      const labels: string[] = [];
+      const powerConsumptionData: number[] = [];
+      const backgroundColor: string[] = [];
+      const borderColor: string[] = [];
+
+      dashboardContext.devices.forEach((device: IDevice) => {
+        labels.push(device.name);
+        powerConsumptionData.push(device.powerConsumption);
+        const colorPairs = getRandomColorPair();
+        backgroundColor.push(colorPairs.bgColor);
+        borderColor.push(colorPairs.borderColor);
+      })
+
       setPowerData(
         {
-          labels: dashboardContext.devices.map((device: IDevice) => device.name),
+          labels,
           datasets: [
             {
               label: 'Power Consumption',
-              data: dashboardContext.devices.map((device: IDevice) => device.powerConsumption),
-              backgroundColor: colors.map(color => color.bg),
-              borderColor: colors.map(color => color.border),
+              data: powerConsumptionData,
+              backgroundColor,
+              borderColor,
               borderWidth: 1,
             },
           ],

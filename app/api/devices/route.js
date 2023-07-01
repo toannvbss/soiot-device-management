@@ -33,7 +33,7 @@ export async function POST(request) {
         id++;
         const createdDate = '2023-06-30';
         const macAddress = '00:0a:95:9d:68:16';
-        const powerConsumption = 0;
+        const powerConsumption = 10;
         const newDevice = { id, name, macAddress, ip, createdDate, powerConsumption };
         devices.push(newDevice);
         return createResponse('Device added successfully', true, newDevice);
