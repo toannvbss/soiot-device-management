@@ -12,19 +12,26 @@ export interface ILog {
 
 interface ILogContext {
     logs: ILog[];
+    totalPage: number;
+    pageIndex: number;
+    changePageIndex: (pageIndex: number) => void;
 }
 
-interface IDashboardProviderProps {
+interface ILogProviderProps {
     children: ReactNode;
 }
 
 export const LogContext = createContext<ILogContext | null>(null);
 
-export const LogProvider = ({children}: IDashboardProviderProps) => {
+export const LogProvider = ({children}: ILogProviderProps) => {
     const [logs, setLogs] = useState<ILog[]>([]);
     const [pageIndex, setPageIndex] = useState<number>(1);
-    const [pageSize, setPageSize] = useState<number>(10);
-    const [total, setTotal] = useState<number>(0);
+    const [pageSize, setPageSize] = useState<number>(5);
+    const [totalPage, setTotalPage] = useState<number>(0);
+
+    const changePageIndex = (pageIndex: number): void => {
+        setPageIndex(pageIndex)
+    }
 
     useEffect(() => {
         fetch(`/api/logs?pageIndex=${pageIndex}&pageSize=${pageSize}`)
@@ -32,7 +39,7 @@ export const LogProvider = ({children}: IDashboardProviderProps) => {
             .then(res => {
                 if (Array.isArray(res.logs)) {
                     setLogs(res.logs);
-                    setTotal(res.total)
+                    setTotalPage(Math.ceil(res.total/pageSize));
                 } else {
                     throw new Error('Invalid data!');
                 }
@@ -40,10 +47,10 @@ export const LogProvider = ({children}: IDashboardProviderProps) => {
             .catch((error: Error) => {
                 console.error('Error:', error);
             });
-    }, []);
+    }, [pageIndex, pageSize]);
     
     return (
-        <LogContext.Provider value={{logs}}>
+        <LogContext.Provider value={{logs, totalPage, pageIndex, changePageIndex}}>
             {children}
         </LogContext.Provider>
     )
