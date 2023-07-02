@@ -20,12 +20,12 @@ export function Sidebar() {
                     </li>
                     <li className="mb-3">
                         <Link href="/admin/dashboard">
-                            <RxCountdownTimer className="inline-block mr-2 size={20}" size={20}/>Logs
+                            <RxCountdownTimer className="inline-block mr-2" size={20}/>Logs
                         </Link>
                     </li>
                     <li className="mb-3">
                         <Link href="/admin/dashboard">
-                            <AiOutlineSetting className="inline-block mr-2 size={20}"/>Setting
+                            <AiOutlineSetting className="inline-block mr-2" size={20}/>Setting
                         </Link>
                     </li>
                 </ul>

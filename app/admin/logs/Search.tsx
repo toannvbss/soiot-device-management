@@ -7,7 +7,8 @@ export default function Search() {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const logContext = useContext(LogContext);
 
-    const handleSearch = () => {
+    const handleSearch = (event: React.FormEvent) => {
+        event.preventDefault();
         if (logContext){
             logContext.changeSearchTerm(searchTerm);
         }
@@ -22,7 +23,10 @@ export default function Search() {
 
     return (
         <div className="flex items-center justify-end">
-            <div className="flex">
+            <form 
+                className="flex"
+                onSubmit={handleSearch}
+            >
                 <div className="relative">
                     <input
                         type="text"
@@ -36,13 +40,13 @@ export default function Search() {
                         onClick={handleResetSearch}
                     />
                 </div>
-                <button 
+                <button
+                    type="submit"
                     className="px-4 ml-2 text-white bg-orange-350 border-l rounded "
-                    onClick={handleSearch}
                 >
                     Search
                 </button>
-            </div>
+            </form>
         </div>
     );
 }
