@@ -19,8 +19,14 @@ function createResponse(msg, success = false, data = null) {
 
 export async function GET(request) {
     try {
+        const searchParams = request.nextUrl.searchParams;
+        const pageIndex = Number(searchParams.get('pageIndex') | 1);
+        const pageSize = Number(searchParams.get('pageSize')) | 10;
+        const offset = (pageIndex - 1) * pageSize;
+        const pageLogs = logs.slice(offset,  offset + pageSize);
         return NextResponse.json({
-            logs
+            logs: pageLogs,
+            total: logs.length
         });
     } catch (error) {
         console.error(error);
