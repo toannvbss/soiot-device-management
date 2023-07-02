@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const router = useRouter()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -27,6 +29,8 @@ export default function LoginForm() {
             const res = await response.json();
             if(!res.success) {
                 setError(res.msg);
+            } else {
+                router.push('/admin/dashboard');
             }
 
         } catch (error) {
