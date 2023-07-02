@@ -1,7 +1,17 @@
 'use client';
-import React from "react";
+import { LogContext } from "@/app/Context/LogContext";
+import React, { useContext, useState } from "react";
 
 export default function Search() {
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const logContext = useContext(LogContext);
+
+    const handleSearch = () => {
+        if (logContext){
+            logContext.changeSearchTerm(searchTerm);
+        }
+    }
+
     return (
         <div className="flex items-center justify-end">
             <div className="flex">
@@ -9,8 +19,13 @@ export default function Search() {
                     type="text"
                     className="block w-full px-4 py-2 text-gray-150 bg-white border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                 />
-                <button className="px-4 ml-2 text-white bg-orange-350 border-l rounded ">
+                <button 
+                    className="px-4 ml-2 text-white bg-orange-350 border-l rounded "
+                    onClick={handleSearch}
+                >
                     Search
                 </button>
             </div>

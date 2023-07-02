@@ -29,11 +29,13 @@ export async function GET(request) {
         const searchParams = request.nextUrl.searchParams;
         const pageIndex = Number(searchParams.get('pageIndex')) ?? 1;
         const pageSize = Number(searchParams.get('pageSize')) ?? 5;
+        const searchTerm = searchParams.get('searchTerm') ?? '';
+        const filterLogs = logs.filter(log => log.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()));
         const offset = (pageIndex - 1) * pageSize;
-        const pageLogs = logs.slice(offset,  offset + pageSize);
+        const pageLogs = filterLogs.slice(offset,  offset + pageSize);
         return NextResponse.json({
             logs: pageLogs,
-            total: logs.length
+            total: filterLogs.length
         });
     } catch (error) {
         console.error(error);
