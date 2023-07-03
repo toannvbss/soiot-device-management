@@ -1,9 +1,23 @@
+'use client'
+
 import { LogProvider } from "@/app/Context/LogContext";
 import LogTable from "./LogTable";
 import Pagination from "./Pagination";
 import Search from "./Search";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
 
 export default function Login() {
+  const router = useRouter();
+  const { data: session, status } = useSession({
+    required: true,
+  });
+  
+  if(status === "loading") {
+    return <></>
+  }
+
   return (
     <LogProvider>
       <div className='min-h-screen pt-10 pb-10 ml-80 flex justify-center'>

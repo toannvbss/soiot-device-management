@@ -1,9 +1,24 @@
+'use client'
+
 import Table from "./Table";
 import Form from "./Form";
 import PowerConsumptionChart from "./PowerConsumptionChart";
 import { DashboardProvider } from "@/app/Context/DashboardContext";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+  const router = useRouter();
+  const { data: session, status } = useSession({
+    required: true,
+  });
+  
+  if(status === "loading") {
+    return <></>
+  }
+
+  console.log(session);
+
   return (
     <DashboardProvider>
       <div className='min-h-screen pt-10 pb-10 ml-80 flex items-center justify-center'>
