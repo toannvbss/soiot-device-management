@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 
 export default function LoginForm() {
     const [username, setUsername] = useState('');
@@ -22,8 +22,15 @@ export default function LoginForm() {
 
             console.log(result);
             
-            if (result?.error) {
+            if (result?.error === 'CredentialsSignin') {
                 setError('Incorrect username or password!');
+            } else {
+                const session = await getSession();
+                if (session) {
+                    router.push('/admin/dashboard');
+                } else {
+                    setError('An error occurred!');
+                }
             }
 
         } catch (error) {
