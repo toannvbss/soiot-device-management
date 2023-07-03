@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { getSession, signIn } from "next-auth/react";
 
@@ -9,6 +9,15 @@ export default function LoginForm() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
+
+    useEffect(() => {
+        (async () => {
+            const session = await getSession();
+            if (session) {
+                router.push('/admin/dashboard');
+            }
+        })();
+    }, []);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -27,7 +36,9 @@ export default function LoginForm() {
             } else {
                 const session = await getSession();
                 if (session) {
-                    router.push('/admin/dashboard');
+                    const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin/dashboard';
+                    sessionStorage.removeItem('redirectAfterLogin');
+                    router.push(redirectUrl);
                 } else {
                     setError('An error occurred!');
                 }

@@ -5,16 +5,16 @@ import LogTable from "./LogTable";
 import Pagination from "./Pagination";
 import Search from "./Search";
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 
-export default function Login() {
-  const router = useRouter();
+export default function LogsPage() {
   const { data: session, status } = useSession({
     required: true,
   });
   
-  if(status === "loading") {
+  if(status === "loading" && !session) {
+    sessionStorage.setItem('redirectAfterLogin', usePathname());
     return <></>
   }
 

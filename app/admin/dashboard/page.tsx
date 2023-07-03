@@ -5,19 +5,17 @@ import Form from "./Form";
 import PowerConsumptionChart from "./PowerConsumptionChart";
 import { DashboardProvider } from "@/app/Context/DashboardContext";
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Login() {
-  const router = useRouter();
   const { data: session, status } = useSession({
     required: true,
   });
   
-  if(status === "loading") {
+  if(status === "loading" && !session) {
+    sessionStorage.setItem('redirectAfterLogin', usePathname());
     return <></>
   }
-
-  console.log(session);
 
   return (
     <DashboardProvider>
