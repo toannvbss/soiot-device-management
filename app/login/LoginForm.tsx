@@ -36,8 +36,11 @@ export default function LoginForm() {
             } else {
                 const session = await getSession();
                 if (session) {
-                    const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || '/admin/dashboard';
-                    sessionStorage.removeItem('redirectAfterLogin');
+                    let redirectUrl = '/admin/dashboard';
+                    if (typeof window !== undefined) {
+                        redirectUrl = sessionStorage.getItem('redirectAfterLogin') ?? redirectUrl;
+                        sessionStorage.removeItem('redirectAfterLogin');
+                    }
                     router.push(redirectUrl);
                 } else {
                     setError('An error occurred!');

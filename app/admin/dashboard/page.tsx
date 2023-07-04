@@ -22,7 +22,9 @@ export default function DashboardPage() {
   });
   
   if(status === "loading" && !session) {
-    sessionStorage.setItem('redirectAfterLogin', usePathname());
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem('redirectAfterLogin', usePathname());
+    }
     return <></>
   }
 
