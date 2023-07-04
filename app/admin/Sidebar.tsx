@@ -7,9 +7,18 @@ import { TbDevicesStar } from "react-icons/tb";
 import { MdDevicesOther } from "react-icons/md";
 import { RxCountdownTimer } from "react-icons/rx";
 import { AiOutlineSetting } from "react-icons/ai";
+import { useSession } from "next-auth/react";
 
 export function Sidebar() {
     const pathname = usePathname();
+    
+    const { data: session, status } = useSession({
+        required: true,
+    });
+
+    if(status === "loading" && !session) {
+        return <></>
+    }
 
     return (
         <div className="fixed h-full w-60 bg-white text-gray-450 border border-r-2 z-50">
