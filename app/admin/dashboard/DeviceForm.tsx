@@ -3,7 +3,7 @@
 import { DashboardContext, IDevice } from '@/app/Context/DashboardContext';
 import { useContext, useState } from 'react';
 
-export default function Form() {
+export default function DeviceForm() {
   const [name, setName] = useState<string>('');
   const [ip, setIp] = useState<string>('');
   const dashboardContext = useContext(DashboardContext);
@@ -20,7 +20,7 @@ export default function Form() {
     }).then(response => response.json())
       .then(res => {
         if (dashboardContext && dashboardContext.addDevice) {
-          dashboardContext.addDevice(res.data as IDevice);
+          dashboardContext.addDevice(res.newDevice as IDevice);
         }
       })
       .catch((error: Error) => {

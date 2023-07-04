@@ -1,8 +1,9 @@
 'use client';
+
 import { DashboardContext, IDevice } from '@/app/Context/DashboardContext';
 import { useEffect, useState, useContext } from 'react';
 
-export default function Table() {
+export default function DeviceTable() {
   const dashboardContext = useContext(DashboardContext);
   const [total, setTotal] = useState<number>(0);
 

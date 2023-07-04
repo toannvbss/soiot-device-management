@@ -28,8 +28,6 @@ export default function LoginForm() {
                 password: password,
                 redirect: false,
             });
-
-            console.log(result);
             
             if (result?.error === 'CredentialsSignin') {
                 setError('Incorrect username or password!');

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 let id = 12;
 const logs = [
@@ -16,7 +16,7 @@ const logs = [
   { id: 12, name: 'Washer-2', action: 'Turn Off', ip: '192.168.1.1', date: '2023-06-30' },
 ];
 
-function createResponse(msg, success = false, data = null) {
+function createResponse(msg: string, success = false, data = null) {
     return NextResponse.json({
         msg,
         success,
@@ -24,7 +24,7 @@ function createResponse(msg, success = false, data = null) {
     })
 }
 
-export async function GET(request) {
+export async function GET(request: NextRequest) {
     try {
         const searchParams = request.nextUrl.searchParams;
         const pageIndex = Number(searchParams.get('pageIndex')) ?? 1;
@@ -39,7 +39,9 @@ export async function GET(request) {
         });
     } catch (error) {
         console.error(error);
-        return createResponse(`* An error occurred: ${error.message}`);
+        if (error instanceof Error) {
+            return createResponse(`* An error occurred: ${error.message}`);
+        }
     }
 }
 

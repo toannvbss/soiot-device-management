@@ -1,7 +1,7 @@
 'use client'
 
-import Table from "./Table";
-import Form from "./Form";
+import DeviceTable from "./DeviceTable";
+import DeviceForm from "./DeviceForm";
 import PowerConsumptionChart from "./PowerConsumptionChart";
 import { DashboardProvider } from "@/app/Context/DashboardContext";
 import { useSession } from 'next-auth/react';
@@ -37,7 +37,7 @@ export default function DashboardPage() {
               <PowerConsumptionChart />
             </div>
             <div className="m-5 p-3 bg-white flex items-center">
-              <Form />
+              <DeviceForm />
             </div>
           </div>
         </div>
@@ -49,13 +49,13 @@ export default function DashboardPage() {
     <DashboardProvider>
       <div className='min-h-screen pt-10 pb-10 ml-60 flex items-center justify-center'>
         <div className='bg-gray-50'>
-          <Table />
+          <DeviceTable />
           <div className="flex justify-between items-stretch">  
             <div className="p-5 flex-shrink-0 bg-white mr-5">
               <PowerConsumptionChart />
             </div>
             <div className="flex-grow bg-white flex items-center">
-              <Form />
+              <DeviceForm />
             </div>
           </div>
         </div>
