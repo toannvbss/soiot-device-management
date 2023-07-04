@@ -32,7 +32,7 @@ export function Sidebar() {
 
 
     const desktopContent = (
-        <div className="fixed h-full w-60 bg-white text-gray-450 border border-r-2 z-50">
+        <div className="fixed h-full bg-white text-gray-450 border border-r-2 z-50">
             <div className="p-6">
                 <p className="w-full mb-10 text-base font-bold">
                     <TbDevicesStar className="inline-block mr-2" size={30}/>

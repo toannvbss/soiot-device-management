@@ -22,7 +22,7 @@ export default function LogsPage() {
 
   return (
     <LogProvider>
-      <div className='min-h-screen pt-10 pb-10 ml-80 flex justify-center'>
+      <div className='min-h-screen pt-10 pb-10 ml-60 flex justify-center'>
         <div className='w-4/5 mt-10 bg-gray-50'>
             <Search />
             <LogTable />

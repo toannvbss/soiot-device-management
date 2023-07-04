@@ -47,8 +47,8 @@ export default function DashboardPage() {
 
   return (
     <DashboardProvider>
-      <div className='min-h-screen pt-10 pb-10 ml-80 flex items-center justify-center'>
-        <div className='w-4/5 bg-gray-50'>
+      <div className='min-h-screen pt-10 pb-10 ml-60 flex items-center justify-center'>
+        <div className='bg-gray-50'>
           <Table />
           <div className="flex justify-between items-stretch">  
             <div className="p-5 flex-shrink-0 bg-white mr-5">
